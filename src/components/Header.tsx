@@ -22,16 +22,16 @@ const Header: React.FC<HeaderProps> = ({ onAddCategoryClick }) => {
             <FontAwesomeIcon icon={faPlus} />
           </div>
         </div>
-        <div className="bg-white text-gray font-semibold px-4 py-2 rounded cursor-not-allowed">
+        <div className="bg-white text-gray font-semibold px-4 py-2 rounded cursor-not-allowed opacity-50">
           <FontAwesomeIcon icon={faRefresh} />
         </div>
-        <div className="bg-white text-gray font-semibold px-4 py-2 rounded cursor-not-allowed">
+        <div className="bg-white text-gray font-semibold px-4 py-2 rounded cursor-not-allowed opacity-50">
           <FontAwesomeIcon icon={faEllipsisV} />
         </div>
-        <div className="bg-white text-gray font-semibold px-4 py-2 rounded cursor-not-allowed gap-1 flex items-center">
+        <div className="bg-white text-gray font-semibold px-4 py-2 rounded cursor-not-allowed gap-1 flex items-center opacity-50">
           <FontAwesomeIcon icon={faClock} />
           <p>|</p>
-          <select name="date-filter" id="time" className="border-none" disabled>
+          <select name="date-filter" id="time" className="border-none cursor-not-allowed" disabled>
             <option value="last_2_days">Last 2 Days</option>
             <option value="last_week">Last Week</option>
             <option value="last_month">Last Month</option>
