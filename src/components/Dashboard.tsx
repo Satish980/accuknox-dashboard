@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-700">
       <Header onAddCategoryClick={handleAddCategoryClick} />
       <div className="p-6 space-y-8 bg-gray-50 min-h-screen">
         {categories?.map((category) => (
