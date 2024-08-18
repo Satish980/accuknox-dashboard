@@ -38,7 +38,7 @@ const CategoryCard: React.FC<Props> = ({ category, openOverlay }) => {
             <div className="font-semibold">
               <FontAwesomeIcon icon={faPlus} />
             </div>
-            <div className="font-normal">Add Widget</div>
+            <div className="font-semibold">Add Widget</div>
           </div>
         </div>
       </div>

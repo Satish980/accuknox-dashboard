@@ -37,7 +37,7 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
         </div>
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold">
+            <h3 className="font-medium">
               Personalise your dashboard by adding the following widgets
             </h3>
           </div>
@@ -46,9 +46,9 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
             {categories.map((category) => (
               <button
                 key={category.id}
-                className={`py-2 px-4 rounded-t-lg ${
+                className={`py-2 px-4 rounded-t-lg font-semibold ${
                   selectedTab === category.id
-                    ? "text-gray-700 border-b-2 border-b-indigo-700"
+                    ? "text-indigo-700 border-b-2 border-b-indigo-700"
                     : "text-gray-700"
                 }`}
                 onClick={() => setSelectedTab(category.id)}
@@ -60,15 +60,20 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
 
           <div className="flex flex-col space-y-2">
             {currentCategory?.widgets.map((widget) => (
-              <label key={widget.id} className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={widget.isVisible}
-                  onChange={() => toggleWidget(currentCategory.id, widget.id)}
-                  className="accent-indigo-700"
-                />
-                <span>{widget.name}</span>
-              </label>
+              <div className="p-2 border-2 rounded">
+                <label
+                  key={widget.id}
+                  className="flex items-center space-x-2 cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    checked={widget.isVisible}
+                    onChange={() => toggleWidget(currentCategory.id, widget.id)}
+                    className="accent-indigo-700"
+                  />
+                  <span>{widget.name}</span>
+                </label>
+              </div>
             ))}
           </div>
 
