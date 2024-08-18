@@ -12,16 +12,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Navbar: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const setSearchQuery = useDashboardStore((state) => state.setSearchQuery);
-  // const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   setSearchQuery(searchText);
-  //   const results = searchWidgets();
-  //   console.log('Search Results:', results); // Replace this with the logic to display the search results
-  // };
+  const searchWidgets = useDashboardStore((state) => state.searchWidgets)
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       setSearchQuery(searchText);
+      const results = searchWidgets();
+      console.log("=====", results)
     }
   };
 
@@ -35,7 +32,7 @@ const Navbar: React.FC = () => {
               <FontAwesomeIcon icon={faGreaterThan} size="xs" />
             </div>
           </div>
-          <div>Dashboard</div>
+          <div className="text-indigo-700">Dashboard V2</div>
         </div>
       </div>
       <div className="flex items-center space-x-2">

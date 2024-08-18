@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ onAddCategoryClick }) => {
         <div className="bg-white text-gray text-indigo-700 font-semibold px-2 py-2 border-indigo-300 border-2 rounded-md cursor-not-allowed gap-1 flex items-center justify-start opacity-50">
           <FontAwesomeIcon icon={faClock} size="lg"/>
           <div className="ml-1 h-full w-full border-r-2 border-indigo-500"/>
-          <select name="date-filter" id="time" className="border-none cursor-not-allowed" disabled>
+          <select name="date-filter" id="time" className="cursor-not-allowed" disabled>
             <option value="last_2_days">Last 2 Days</option>
             <option value="last_week">Last Week</option>
             <option value="last_month">Last Month</option>
