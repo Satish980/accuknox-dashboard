@@ -29,7 +29,7 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-end z-50">
       <div className="bg-white w-100 h-full shadow-lg transition-transform transform translate-x-0">
-        <div className="flex p-3 bg-blue-700 justify-between items-center">
+        <div className="flex p-3 bg-indigo-700 justify-between items-center">
           <h3 className="font-semibold text-white">Add Widget</h3>
           <div className="cursor-pointer text-lg" onClick={onClose}>
             <FontAwesomeIcon icon={faClose} className="text-white" />
@@ -48,7 +48,7 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
                 key={category.id}
                 className={`py-2 px-4 rounded-t-lg ${
                   selectedTab === category.id
-                    ? "text-gray-700 border-b-2 border-b-blue-700"
+                    ? "text-gray-700 border-b-2 border-b-indigo-700"
                     : "text-gray-700"
                 }`}
                 onClick={() => setSelectedTab(category.id)}
@@ -60,11 +60,12 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
 
           <div className="flex flex-col space-y-2">
             {currentCategory?.widgets.map((widget) => (
-              <label key={widget.id} className="flex items-center space-x-2">
+              <label key={widget.id} className="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={widget.isVisible}
                   onChange={() => toggleWidget(currentCategory.id, widget.id)}
+                  className="accent-indigo-700"
                 />
                 <span>{widget.name}</span>
               </label>

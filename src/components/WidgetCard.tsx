@@ -14,10 +14,10 @@ const WidgetCard: React.FC<Props> = ({ widget, removeWidget, category }) => {
   return (
     <div
       key={widget.id}
-      className="relative p-6 bg-white rounded-lg shadow-md border border-gray-200 flex flex-col justify-between"
+      className="relative p-6 bg-white rounded-md shadow-md flex flex-col justify-between"
     >
       <div
-        className="absolute top-0 right-1 text-gray-500 hover:text-blue-700 cursor-pointer"
+        className="absolute top-0 right-1 text-gray-500 hover:text-indigo-700 cursor-pointer"
         onClick={() => removeWidget(category.id, widget.id)}
       >
         <FontAwesomeIcon icon={faClose} />

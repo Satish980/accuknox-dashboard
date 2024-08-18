@@ -51,17 +51,18 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-700">
+    <div className="min-h-screen bg-gray-100">
       <Header onAddCategoryClick={handleAddCategoryClick} />
-      <div className="p-6 space-y-8 bg-gray-50 min-h-screen">
-        {categories?.map((category) => (
+      <div className="px-8 space-y-8 min-h-screen">
+        {categories?.map((category, index) => (
           <CategoryCard
             category={category}
             openOverlay={openOverlay}
-            key={category.id + category.name}
+            key={category.id + index}
           />
         ))}
 
+      </div>
         {/* Side Overlay for Adding Widgets */}
         {isOverlayOpen && (
           <AddWidgetModal
@@ -73,7 +74,6 @@ const Dashboard: React.FC = () => {
             closeOverlay={closeOverlay}
           />
         )}
-      </div>
       <WidgetModal
         isOpen={isModalOpen}
         onClose={handleModalClose}
