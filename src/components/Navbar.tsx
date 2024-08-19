@@ -1,5 +1,4 @@
-// src/Navbar.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "redux-bundler-react";
 import {
   faBell,
@@ -9,15 +8,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Navbar: React.FC = ({ doSearchWidget }) => {
+const Navbar: React.FC<{ doSearchWidget: (query: string) => void }> = ({
+  doSearchWidget,
+}) => {
   const [searchText, setSearchText] = useState("");
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
 
-  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      console.log("=====", searchText)
-      doSearchWidget(searchText);
-    }
-  };
+  // Debouncing the search text with 300ms delay
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 300);
+
+    // clearing the timeout if searchText changes before the timeout
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchText]);
+
+  // Triggering the search when debouncedSearchText changes
+  useEffect(() => {
+    doSearchWidget(debouncedSearchText);
+  }, [debouncedSearchText, doSearchWidget]);
 
   return (
     <nav className="bg-white shadow-md px-4 py-2 flex justify-between items-center">
@@ -43,7 +55,6 @@ const Navbar: React.FC = ({ doSearchWidget }) => {
             className="bg-gray-100 pl-8 p-2 border rounded w-full"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            onKeyDown={handleSearch}
           />
         </div>
       </div>
@@ -64,8 +75,4 @@ const Navbar: React.FC = ({ doSearchWidget }) => {
   );
 };
 
-export default connect(
-  "doSearchWidget",
-  "selectFilteredWidgets",
-  Navbar
-);
+export default connect("doSearchWidget", "selectFilteredWidgets", Navbar);

@@ -1,6 +1,6 @@
 import { Category, Widget } from "../types";
 
-// Function to add a widget to a category
+// to add a widget to a category
 export const addWidgetToCategory = (
   categories: Category[],
   categoryId: string,
@@ -16,7 +16,7 @@ export const addWidgetToCategory = (
   );
 };
 
-// Function to remove a widget from a category
+// to remove a widget from a category
 export const removeWidgetFromCategory = (
   categories: Category[],
   categoryId: string,
@@ -32,13 +32,12 @@ export const removeWidgetFromCategory = (
   );
 };
 
-// Function to filter widgets by a search query
+// to filter widgets by a search query
 export const filterWidgetsBySearchQuery = (
   categories: Category[],
   searchTerm: string
 ): Category[] => {
   if (!searchTerm) {
-    console.log("==== inside no search");
     return categories;
   }
   const lowercasedSearchTerm = searchTerm.trim().toLowerCase();

@@ -2,6 +2,7 @@ import {
   FETCH_STATUS,
   CATEGORY_ACTIONS,
   INITIAL_CATEGORY_BUNDLE_DATA,
+  CATEGORY_BUNDLE_STATE,
 } from "./constants";
 import {
   addWidgetToCategory,
@@ -58,41 +59,22 @@ const categoryBundle = {
 
       case CATEGORY_ACTIONS.SEARCH_WIDGET_SUCCESS: {
         const searchTerm = action.payload;
-        console.log("=====", searchTerm)
-        console.log(filterWidgetsBySearchQuery(state.categories, searchTerm))
+        if (!searchTerm) {
+          return {
+            ...INITIAL_CATEGORY_BUNDLE_DATA,
+            categoryBundleState: CATEGORY_BUNDLE_STATE.SEARCH_WIDGET,
+          };
+        }
         return {
           ...state,
           categories: filterWidgetsBySearchQuery(state.categories, searchTerm),
         };
       }
 
-      case CATEGORY_ACTIONS.TOGGLE_WIDGET_VISIBILITY: {
-        const { categoryId, widgetId } = action.payload;
+      case CATEGORY_ACTIONS.UPDATE_CATEGORIES: {
         return {
           ...state,
-          categories: state.categories.map((category) =>
-            category.id === categoryId
-              ? {
-                  ...category,
-                  widgets: category.widgets.map((widget) =>
-                    widget.id === widgetId
-                      ? { ...widget, isVisible: !widget.isVisible }
-                      : widget
-                  ),
-                }
-              : category
-          ),
-        };
-      }
-
-      case CATEGORY_ACTIONS.UPDATE_CATEGORY_WIDGETS: {
-        const { categoryId } = action.payload;
-        // Assuming updates are reflected directly in the state, if necessary
-        return {
-          ...state,
-          categories: state.categories.map((category) =>
-            category.id === categoryId ? { ...category } : category
-          ),
+          categories: action.payload,
         };
       }
 
@@ -122,7 +104,7 @@ const categoryBundle = {
     },
 
   doRemoveWidget:
-    (categoryId, widget) =>
+    (categoryId, widgetId) =>
     ({ dispatch }) => {
       dispatch({
         type: CATEGORY_ACTIONS.REMOVE_WIDGET_SUCCESS,
@@ -139,22 +121,12 @@ const categoryBundle = {
       });
     },
 
-  doToggleWidgetVisibility:
-    (categoryId, widgetId) =>
-    ({ dispatch }) => {
-      dispatch({
-        type: CATEGORY_ACTIONS.TOGGLE_WIDGET_VISIBILITY,
-        payload: { categoryId, widgetId },
-      });
-    },
-
   doUpdateCategoryWidgets:
-    (categoryId) =>
+    (categories) =>
     ({ dispatch }) => {
-      // Any additional logic before committing the updates can be added here
       dispatch({
-        type: CATEGORY_ACTIONS.UPDATE_CATEGORY_WIDGETS,
-        payload: { categoryId },
+        type: CATEGORY_ACTIONS.UPDATE_CATEGORIES,
+        payload: categories,
       });
     },
 
