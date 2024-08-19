@@ -1,8 +1,8 @@
 // src/CategoryCard.tsx
 import React from "react";
 import { connect } from "redux-bundler-react";
-import { WidgetCard } from ".";
-import { Category } from "../types";
+import { WidgetCard } from "..";
+import { Category } from "../../types";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

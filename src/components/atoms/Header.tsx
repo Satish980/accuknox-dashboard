@@ -1,4 +1,3 @@
-// src/Header.tsx
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,16 +6,20 @@ import {
   faPlus,
   faRefresh,
 } from "@fortawesome/free-solid-svg-icons";
+
 interface HeaderProps {
   onAddCategoryClick: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ onAddCategoryClick }) => {
   return (
-    <div className="flex justify-between items-center p-6 border-none">
-      <h1 className="text-2xl font-semibold">CNAPP Dashboard</h1>
-      <div className="flex gap-2">
-        <div className="flex flex-row bg-white text-gray px-4 py-2 border-gray-200 border-2 rounded-md justify-between gap-2 cursor-pointer" onClick={onAddCategoryClick}>
+    <div className="flex flex-col md:flex-row justify-between items-center p-6 border-none">
+      <h1 className="text-xl sm:text-2xl font-semibold mb-4 md:mb-0">CNAPP Dashboard</h1>
+      <div className="flex flex-wrap gap-2 justify-end w-full md:w-auto">
+        <div
+          className="flex flex-row bg-white text-gray px-4 py-2 border-gray-200 border-2 rounded-md justify-between gap-2 cursor-pointer"
+          onClick={onAddCategoryClick}
+        >
           <div className="font-semibold">Add Widget</div>
           <div className="font-semibold">
             <FontAwesomeIcon icon={faPlus} />

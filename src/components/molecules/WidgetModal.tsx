@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { connect } from "redux-bundler-react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModalFooter from "./ModalFooter";
-import { Category } from "../types";
+import ModalFooter from "../atoms/ModalFooter";
+import { Category } from "../../types";
 
 interface WidgetModalProps {
   isOpen: boolean;

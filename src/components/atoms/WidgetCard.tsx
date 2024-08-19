@@ -2,7 +2,7 @@ import React from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Category, Widget } from "../types";
+import { Category, Widget } from "../../types";
 
 type Props = {
   widget: Widget;

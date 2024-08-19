@@ -6,8 +6,8 @@ import {
   CategoryCard,
   Header,
   WidgetModal,
-} from "../components";
-import { Category } from "../types";
+} from "..";
+import { Category } from "../../types";
 
 type Props = {
   categories: Category[];
@@ -31,7 +31,7 @@ const Dashboard: React.FC<Props> = ({
   const [widgetName, setWidgetName] = useState<string>("");
   const [widgetContent, setWidgetContent] = useState<string>("");
 
-  // Fetch categories on component mount
+  // Fetching categories on component mount
   React.useEffect(() => {
     doFetchCategories();
   }, [doFetchCategories]);

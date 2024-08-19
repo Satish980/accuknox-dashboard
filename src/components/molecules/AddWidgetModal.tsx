@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ModalFooter from "./ModalFooter";
+import ModalFooter from "../atoms/ModalFooter";
 
 type Props = {
   widgetName: string;
