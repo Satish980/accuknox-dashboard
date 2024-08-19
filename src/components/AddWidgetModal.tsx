@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalFooter from "./ModalFooter";
@@ -9,6 +9,7 @@ type Props = {
   widgetContent: string;
   setWidgetContent: any;
   handleAddWidget: () => void;
+  isOverlayOpen: boolean;
   closeOverlay: () => void;
 };
 
@@ -18,8 +19,25 @@ const AddWidgetModal: React.FC<Props> = ({
   widgetContent,
   setWidgetContent,
   handleAddWidget,
+  isOverlayOpen,
   closeOverlay,
 }) => {
+  // Closing modal on 'Esc' key press
+  useEffect(() => {
+    const handleEscKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeOverlay();
+      }
+    };
+
+    if (isOverlayOpen) {
+      document.addEventListener("keydown", handleEscKeyPress);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscKeyPress);
+    };
+  }, [isOverlayOpen, closeOverlay]);
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-end z-50">
       <div className="bg-white w-100 h-full shadow-lg transition-transform transform translate-x-0">

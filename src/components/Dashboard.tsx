@@ -89,6 +89,7 @@ const Dashboard: React.FC<Props> = ({
           setWidgetName={setWidgetName}
           setWidgetContent={setWidgetContent}
           handleAddWidget={handleAddWidget}
+          isOverlayOpen={isOverlayOpen}
           closeOverlay={closeOverlay}
         />
       )}

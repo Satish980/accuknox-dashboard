@@ -9,13 +9,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type Props = {
   category: Category;
   openOverlay: (categoryId: string) => void;
-  removeWidgetFromCategory: (categoryId: string, widgetId: string) => void;
+  doRemoveWidget: (categoryId: string, widgetId: string) => void;
 };
 
 const CategoryCard: React.FC<Props> = ({
   category,
   openOverlay,
-  removeWidgetFromCategory,
+  doRemoveWidget,
 }) => {
   return (
     <div key={category.id} className="space-y-2">
@@ -26,7 +26,7 @@ const CategoryCard: React.FC<Props> = ({
             <WidgetCard
               widget={widget}
               category={category}
-              removeWidget={removeWidgetFromCategory}
+              removeWidget={doRemoveWidget}
               key={widget.id + widget.name}
             />
           ) : (
@@ -37,7 +37,7 @@ const CategoryCard: React.FC<Props> = ({
           className="p-4 flex justify-center items-center bg-white text-sm rounded-md border-gray-300 text-gray-500 cursor-pointer"
           onClick={() => openOverlay?.(category.id)}
         >
-          <div className="flex flex-row bg-white text-gray px-4 py-2 rounded justify-between gap-2 cursor-pointer border-2 border-gray-200 rounded-md">
+          <div className="flex flex-row bg-white text-gray-700 px-4 py-2 rounded justify-between gap-2 cursor-pointer border-2 border-gray-200 rounded-md">
             <div className="font-semibold">
               <FontAwesomeIcon icon={faPlus} />
             </div>
@@ -49,4 +49,4 @@ const CategoryCard: React.FC<Props> = ({
   );
 };
 
-export default connect("doRemoveWidgetFromCategory", CategoryCard);
+export default connect("doRemoveWidget", CategoryCard);

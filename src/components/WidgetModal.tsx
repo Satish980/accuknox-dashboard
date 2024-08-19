@@ -1,5 +1,4 @@
-// src/WidgetModal.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "redux-bundler-react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,27 +9,64 @@ interface WidgetModalProps {
   isOpen: boolean;
   onClose: () => void;
   categories: Category[];
-  doToggleWidgetVisibility: (categoryId: string, widgetId: string) => void;
-  updateCategoryWidgets: (categoryId: string) => void; // Action to update widgets on confirm
+  doUpdateCategoryWidgets: (categories: Category[]) => void; // Action to update widgets on confirm
 }
 
 const WidgetModal: React.FC<WidgetModalProps> = ({
   isOpen,
   onClose,
   categories,
-  doToggleWidgetVisibility,
-  updateCategoryWidgets,
+  doUpdateCategoryWidgets,
 }) => {
   const [selectedTab, setSelectedTab] = useState("cspm_executive_dashboard");
+  const [localCategories, setLocalCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    if (categories.length) {
+      setLocalCategories(categories);
+    }
+  }, [categories]);
+
+  // Closing modal on 'Esc' key press
+  useEffect(() => {
+    const handleEscKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscKeyPress);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscKeyPress);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  const currentCategory = categories.find((cat) => cat.id === selectedTab);
+  const currentCategory = localCategories.find((cat) => cat.id === selectedTab);
+
+  const toggleWidgetVisibility = (categoryId: string, widgetId: string) => {
+    setLocalCategories((prevCategories) =>
+      prevCategories.map((category) =>
+        category.id === categoryId
+          ? {
+              ...category,
+              widgets: category.widgets.map((widget) =>
+                widget.id === widgetId
+                  ? { ...widget, isVisible: !widget.isVisible }
+                  : widget
+              ),
+            }
+          : category
+      )
+    );
+  };
 
   const handleConfirm = () => {
-    if (currentCategory) {
-      updateCategoryWidgets(currentCategory.id); // Apply the widget updates for the selected category
-    }
+    doUpdateCategoryWidgets(localCategories); // Apply the widget updates for all categories
     onClose();
   };
 
@@ -51,7 +87,7 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
           </div>
 
           <div className="flex space-x-2 mb-4">
-            {categories.map((category, index) => (
+            {localCategories.map((category, index) => (
               <button
                 key={category.id + index}
                 className={`py-2 px-4 rounded-t-lg font-semibold ${
@@ -74,7 +110,7 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
                     type="checkbox"
                     checked={widget.isVisible}
                     onChange={() =>
-                      doToggleWidgetVisibility(currentCategory.id, widget.id)
+                      toggleWidgetVisibility(currentCategory.id, widget.id)
                     }
                     className="accent-indigo-700"
                   />
@@ -93,7 +129,6 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
 
 export default connect(
   "selectCategories",
-  "doToggleWidgetVisibility",
-  "doUpdateCategoryWidgets", // New action for confirming widget updates
+  "doUpdateCategoryWidgets",
   WidgetModal
 );
