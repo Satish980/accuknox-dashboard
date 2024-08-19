@@ -40,7 +40,6 @@ This repository contains the AccuKnox Dashboard project, a dynamic and interacti
 - **Bundling**: Vite.
 - **Styling**: Tailwind CSS.
 - **Icons**: FontAwesome.
-- **Deployment**: Netlify.
 
 **Note**: Upon refreshing the page, data will revert to the initial JSON file data.
 
