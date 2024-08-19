@@ -4,21 +4,6 @@
 
 This repository contains the AccuKnox Dashboard project, a dynamic and interactive dashboard where users can manage categories and widgets. It allows users to add, remove, and search for widgets within different categories.
 
-## Problem Statement
-
-**Assignment:**
-1. Create a JSON structure to build this dashboard/widget dynamically.
-    - The JSON should contain categories, each of which can contain multiple widgets.
-2. Users should be able to dynamically add or remove widgets from a section/category. For example, the "CSPM Executive Dashboard" is a category.
-3. For each widget, placeholder text can be used for assignment purposes.
-4. When the user clicks on "+Add Widget," they should be able to add a widget name and text, which will then be added to the respective category.
-5. Each widget should have a cross icon to remove it from a category, or users can uncheck it from the category list via the "Add Widget" section.
-6. Users should be able to search within the list of all widgets.
-
-**Development:**
-1. Use React technology to build this page.
-2. Use a store management tool to add and remove widgets locally.
-
 ## Approach
 
 ### Constructing the Dashboard
