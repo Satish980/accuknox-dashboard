@@ -4,6 +4,8 @@
 
 This repository contains the AccuKnox Dashboard project, a dynamic and interactive dashboard where users can manage categories and widgets. It allows users to add, remove, and search for widgets within different categories.
 
+Please Visit: https://accuknox-dashboar-react.netlify.app/
+
 ## Approach
 
 ### Constructing the Dashboard
@@ -40,6 +42,7 @@ This repository contains the AccuKnox Dashboard project, a dynamic and interacti
 - **Bundling**: Vite.
 - **Styling**: Tailwind CSS.
 - **Icons**: FontAwesome.
+- **Deployment**: Netlify.
 
 **Note**: Upon refreshing the page, data will revert to the initial JSON file data.
 
