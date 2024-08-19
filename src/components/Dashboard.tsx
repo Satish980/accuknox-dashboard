@@ -1,17 +1,28 @@
 // src/Dashboard.tsx
 import React, { useState } from "react";
-import useDashboardStore from "../store";
+import { connect } from "redux-bundler-react";
 import {
   AddWidgetModal,
   CategoryCard,
   Header,
   WidgetModal,
 } from "../components";
+import { Category } from "../types";
 
-const Dashboard: React.FC = () => {
-  const categories = useDashboardStore((state) => state.categories);
-  const addWidget = useDashboardStore((state) => state.addWidgetToCategory);
+type Props = {
+  categories: Category[];
+  doAddWidget: (
+    categoryId: string,
+    widget: { name: string; content: string }
+  ) => void;
+  doFetchCategories: () => void;
+};
 
+const Dashboard: React.FC<Props> = ({
+  categories,
+  doAddWidget,
+  doFetchCategories,
+}) => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
@@ -20,9 +31,17 @@ const Dashboard: React.FC = () => {
   const [widgetName, setWidgetName] = useState<string>("");
   const [widgetContent, setWidgetContent] = useState<string>("");
 
+  // Fetch categories on component mount
+  React.useEffect(() => {
+    doFetchCategories();
+  }, [doFetchCategories]);
+
   const handleAddWidget = () => {
-    if (selectedCategoryId) {
-      addWidget(selectedCategoryId, widgetName, widgetContent);
+    if (selectedCategoryId && widgetName.trim() && widgetContent.trim()) {
+      doAddWidget(selectedCategoryId, {
+        name: widgetName,
+        content: widgetContent,
+      });
       closeOverlay();
     }
   };
@@ -54,26 +73,25 @@ const Dashboard: React.FC = () => {
     <div className="min-h-screen bg-gray-100">
       <Header onAddCategoryClick={handleAddCategoryClick} />
       <div className="px-8 space-y-8 min-h-screen">
-        {categories?.map((category, index) => (
+        {categories?.map((category: Category, index: number) => (
           <CategoryCard
             category={category}
             openOverlay={openOverlay}
             key={category.id + index}
           />
         ))}
-
       </div>
-        {/* Side Overlay for Adding Widgets */}
-        {isOverlayOpen && (
-          <AddWidgetModal
-            widgetName={widgetName}
-            widgetContent={widgetContent}
-            setWidgetName={setWidgetName}
-            setWidgetContent={setWidgetContent}
-            handleAddWidget={handleAddWidget}
-            closeOverlay={closeOverlay}
-          />
-        )}
+      {/* Side Overlay for Adding Widgets */}
+      {isOverlayOpen && (
+        <AddWidgetModal
+          widgetName={widgetName}
+          widgetContent={widgetContent}
+          setWidgetName={setWidgetName}
+          setWidgetContent={setWidgetContent}
+          handleAddWidget={handleAddWidget}
+          closeOverlay={closeOverlay}
+        />
+      )}
       <WidgetModal
         isOpen={isModalOpen}
         onClose={handleModalClose}
@@ -83,4 +101,9 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default connect(
+  "selectCategories",
+  "doAddWidget",
+  "doFetchCategories",
+  Dashboard
+);

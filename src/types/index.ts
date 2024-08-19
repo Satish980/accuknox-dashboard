@@ -23,3 +23,9 @@ export interface DashboardState {
   toggleWidgetVisibility: (categoryId: string, widgetId: string) => void;
   searchWidgets: () => Widget[];
 }
+
+export interface CategoryBundle {
+  categories: Category[];
+  fetchStatus: number;
+  categoryBundleState: number;
+}

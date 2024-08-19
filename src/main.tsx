@@ -1,10 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { createRoot } from "react-dom/client";
+import { Provider } from "redux-bundler-react";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+import App from "./App.tsx";
+import createStore from "../src/bundles";
+import "./index.css";
+
+const store = createStore();
+createRoot(document.getElementById("root")!).render(
+  <Provider store={store}>
     <App />
-  </StrictMode>,
-)
+  </Provider>
+);

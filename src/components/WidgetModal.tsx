@@ -1,30 +1,38 @@
 // src/WidgetModal.tsx
 import React, { useState } from "react";
-import useDashboardStore from "../store";
+import { connect } from "redux-bundler-react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalFooter from "./ModalFooter";
+import { Category } from "../types";
 
 interface WidgetModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  categories: Category[];
+  doToggleWidgetVisibility: (categoryId: string, widgetId: string) => void;
+  updateCategoryWidgets: (categoryId: string) => void; // Action to update widgets on confirm
 }
 
 const WidgetModal: React.FC<WidgetModalProps> = ({
   isOpen,
   onClose,
-  onConfirm,
+  categories,
+  doToggleWidgetVisibility,
+  updateCategoryWidgets,
 }) => {
   const [selectedTab, setSelectedTab] = useState("cspm_executive_dashboard");
-  const categories = useDashboardStore((state) => state.categories);
-  const toggleWidget = useDashboardStore(
-    (state) => state.toggleWidgetVisibility
-  );
 
   if (!isOpen) return null;
 
   const currentCategory = categories.find((cat) => cat.id === selectedTab);
+
+  const handleConfirm = () => {
+    if (currentCategory) {
+      updateCategoryWidgets(currentCategory.id); // Apply the widget updates for the selected category
+    }
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-end z-50">
@@ -43,9 +51,9 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
           </div>
 
           <div className="flex space-x-2 mb-4">
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <button
-                key={category.id}
+                key={category.id + index}
                 className={`py-2 px-4 rounded-t-lg font-semibold ${
                   selectedTab === category.id
                     ? "text-indigo-700 border-b-2 border-b-indigo-700"
@@ -60,15 +68,14 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
 
           <div className="flex flex-col space-y-2">
             {currentCategory?.widgets.map((widget) => (
-              <div className="p-2 border-2 rounded">
-                <label
-                  key={widget.id}
-                  className="flex items-center space-x-2 cursor-pointer"
-                >
+              <div key={widget.id} className="p-2 border-2 rounded">
+                <label className="flex items-center space-x-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={widget.isVisible}
-                    onChange={() => toggleWidget(currentCategory.id, widget.id)}
+                    onChange={() =>
+                      doToggleWidgetVisibility(currentCategory.id, widget.id)
+                    }
                     className="accent-indigo-700"
                   />
                   <span>{widget.name}</span>
@@ -77,11 +84,16 @@ const WidgetModal: React.FC<WidgetModalProps> = ({
             ))}
           </div>
 
-          <ModalFooter onCancel={onClose} onConfirm={onConfirm} />
+          <ModalFooter onCancel={onClose} onConfirm={handleConfirm} />
         </div>
       </div>
     </div>
   );
 };
 
-export default WidgetModal;
+export default connect(
+  "selectCategories",
+  "doToggleWidgetVisibility",
+  "doUpdateCategoryWidgets", // New action for confirming widget updates
+  WidgetModal
+);

@@ -50,7 +50,7 @@ const AddWidgetModal: React.FC<Props> = ({
             onCancel={closeOverlay}
             onConfirm={handleAddWidget}
             isConfirmDisabled={!(widgetName && widgetContent)}
-            confirmButtonText={'Add'}
+            confirmButtonText={"Add"}
           />
         </div>
       </div>

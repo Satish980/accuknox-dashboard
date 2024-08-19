@@ -1,6 +1,6 @@
 // src/Navbar.tsx
 import React, { useState } from "react";
-import useDashboardStore from "../store";
+import { connect } from "redux-bundler-react";
 import {
   faBell,
   faGreaterThan,
@@ -9,23 +9,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC = ({ doSearchWidget }) => {
   const [searchText, setSearchText] = useState("");
-  const setSearchQuery = useDashboardStore((state) => state.setSearchQuery);
-  const searchWidgets = useDashboardStore((state) => state.searchWidgets)
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setSearchQuery(searchText);
-      const results = searchWidgets();
-      console.log("=====", results)
+      console.log("=====", searchText)
+      doSearchWidget(searchText);
     }
   };
 
   return (
     <nav className="bg-white shadow-md px-4 py-2 flex justify-between items-center">
       <div className="flex items-center space-x-4">
-        <div className="flex item-center gap-2 font-semibold">
+        <div className="flex items-center gap-2 font-semibold">
           <div className="text-gray-500 flex gap-2 items-center">
             Home
             <div>
@@ -52,14 +49,23 @@ const Navbar: React.FC = () => {
       </div>
       <div className="flex gap-6">
         <div>
-          <FontAwesomeIcon icon={faBell} title="Notifications"/>
+          <FontAwesomeIcon icon={faBell} title="Notifications" />
         </div>
         <div>
-          <FontAwesomeIcon icon={faUserCircle} size="xl" title="User profile"/>
+          <FontAwesomeIcon
+            icon={faUserCircle}
+            size="xl"
+            title="User profile"
+            className="text-indigo-700"
+          />
         </div>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default connect(
+  "doSearchWidget",
+  "selectFilteredWidgets",
+  Navbar
+);

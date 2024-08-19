@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ onAddCategoryClick }) => {
       <h1 className="text-2xl font-semibold">CNAPP Dashboard</h1>
       <div className="flex gap-2">
         <div className="flex flex-row bg-white text-gray px-4 py-2 border-gray-200 border-2 rounded-md justify-between gap-2 cursor-pointer" onClick={onAddCategoryClick}>
-          <div className="font-normal">Add Widget</div>
+          <div className="font-semibold">Add Widget</div>
           <div className="font-semibold">
             <FontAwesomeIcon icon={faPlus} />
           </div>

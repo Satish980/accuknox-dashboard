@@ -1,7 +1,7 @@
-// Contains category name and List of widgets present in that category
+// src/CategoryCard.tsx
 import React from "react";
+import { connect } from "redux-bundler-react";
 import { WidgetCard } from ".";
-import useDashboardStore from "../store";
 import { Category } from "../types";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,11 +9,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type Props = {
   category: Category;
   openOverlay: (categoryId: string) => void;
+  removeWidgetFromCategory: (categoryId: string, widgetId: string) => void;
 };
-const CategoryCard: React.FC<Props> = ({ category, openOverlay }) => {
-  const removeWidget = useDashboardStore(
-    (state) => state.removeWidgetFromCategory
-  );
+
+const CategoryCard: React.FC<Props> = ({
+  category,
+  openOverlay,
+  removeWidgetFromCategory,
+}) => {
   return (
     <div key={category.id} className="space-y-2">
       <h2 className="text-1xl font-semibold">{category.name}</h2>
@@ -23,7 +26,7 @@ const CategoryCard: React.FC<Props> = ({ category, openOverlay }) => {
             <WidgetCard
               widget={widget}
               category={category}
-              removeWidget={removeWidget}
+              removeWidget={removeWidgetFromCategory}
               key={widget.id + widget.name}
             />
           ) : (
@@ -46,4 +49,4 @@ const CategoryCard: React.FC<Props> = ({ category, openOverlay }) => {
   );
 };
 
-export default CategoryCard;
+export default connect("doRemoveWidgetFromCategory", CategoryCard);
