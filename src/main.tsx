@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "redux-bundler-react";
 
 import App from "./App.tsx";
-import createStore from "../src/bundles";
+import createStore from "./bundles";
 import "./index.css";
 
 const store = createStore();
